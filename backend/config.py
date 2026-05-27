@@ -60,7 +60,7 @@ ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "")
 EMAIL_SENDER_NAME = "HR信息日报"
 
 # ========== 定时任务配置 (CRON 格式) ==========
-# 每天抓取时间 (10:30，推送前10分钟)
+# 每天抓取时间 (10:30)
 FETCH_CRON_HOUR = 10
 FETCH_CRON_MINUTE = 30
 
