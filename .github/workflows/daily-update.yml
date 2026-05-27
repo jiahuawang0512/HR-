@@ -36,11 +36,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 部署到 EdgeOne Pages
-        if: github.event_name == 'schedule'
-        uses: edgeone/edgeone-pages-action@v1
-        with:
-          token: ${{ secrets.EDGEONE_TOKEN }}
-          project: ${{ secrets.EDGEONE_PROJECT }}
-          env: production
-          dist: ./static
+      # TODO: 配置 EdgeOne Pages 部署
+      # 请参考 EdgeOne Pages 官方文档配置部署步骤
+      # 当前已生成 static/index.html 文件，可直接部署
