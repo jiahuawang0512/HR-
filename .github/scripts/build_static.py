@@ -1,34 +1,56 @@
 #!/usr/bin/env python3
+"""
+构建静态页面 - 将 data.js 和 app.js 内联到 index.html 中
+"""
 import os
 
-# 读取前端文件
-index_html = open('index.html', 'r', encoding='utf-8').read()
-app_js = open('app.js', 'r', encoding='utf-8').read()
-data_js = open('data.js', 'r', encoding='utf-8').read()
-styles_css = open('styles.css', 'r', encoding='utf-8').read()
+def build_static():
+    # 读取文件
+    with open('index.html', 'r', encoding='utf-8') as f:
+        html = f.read()
+    
+    with open('app.js', 'r', encoding='utf-8') as f:
+        app_js = f.read()
+    
+    with open('data.js', 'r', encoding='utf-8') as f:
+        data_js = f.read()
+    
+    with open('styles.css', 'r', encoding='utf-8') as f:
+        styles_css = f.read()
+    
+    # 创建 static 目录
+    os.makedirs('static', exist_ok=True)
+    
+    # 替换外部引用为内联内容
+    # 1. 替换 styles.css 引用
+    html = html.replace(
+        '<link rel="stylesheet" href="styles.css">',
+        f'<style>\n{styles_css}\n</style>'
+    )
+    
+    # 2. 替换 data.js 引用
+    html = html.replace(
+        '<script src="data.js"></script>',
+        f'<script>\n{data_js}\n</script>'
+    )
+    
+    # 3. 替换 app.js 引用
+    html = html.replace(
+        '<script src="app.js"></script>',
+        f'<script>\n{app_js}\n</script>'
+    )
+    
+    # 写入 static/index.html
+    with open('static/index.html', 'w', encoding='utf-8') as f:
+        f.write(html)
+    
+    # 同时更新根目录的 index.html（用于 EdgeOne Pages 部署）
+    with open('index.html', 'w', encoding='utf-8') as f:
+        f.write(html)
+    
+    print('✅ 静态页面构建完成')
+    print(f'   static/index.html: {os.path.getsize("static/index.html")} bytes')
+    print(f'   index.html: {os.path.getsize("index.html")} bytes')
 
-# 创建静态目录
-os.makedirs('static', exist_ok=True)
-
-# 创建静态页面
-static_html = f'''<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR信息日报 - 人力资源管理信息追踪</title>
-    <link rel="stylesheet" href="data:text/css,{styles_css.replace(chr(10), chr(10)+'    ')}" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    {index_html.replace('<script src="data.js"></script>', '').replace('<script src="app.js"></script>', '')}
-    <script>
-        {data_js}
-        {app_js}
-    </script>
-</body>
-</html>'''
-
-# 写入静态文件
-open('static/index.html', 'w', encoding='utf-8').write(static_html)
-print('✅ 静态页面构建完成')
+if __name__ == "__main__":
+    build_static()
