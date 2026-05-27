@@ -15,7 +15,13 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from database import get_articles, init_database
 
 
-def generate_data_js(output_path: str = "../data.js") -> dict:
+def generate_data_js(output_path: str = None) -> dict:
+    """从数据库生成 data.js 文件"""
+    
+    # 默认输出到项目根目录的 data.js
+    if output_path is None:
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        output_path = os.path.join(project_root, "data.js")
     """从数据库生成 data.js 文件"""
     
     # 初始化数据库
