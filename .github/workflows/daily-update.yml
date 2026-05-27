@@ -36,6 +36,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # TODO: 配置 EdgeOne Pages 部署
-      # 请参考 EdgeOne Pages 官方文档配置部署步骤
-      # 当前已生成 static/index.html 文件，可直接部署
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: 安装 EdgeOne CLI
+        run: npm install -g edgeone
+
+      - name: 部署到 EdgeOne Pages
+        run: npx edgeone pages deploy ./static -n hr-daily -t ${{ secrets.EDGEONE_API_TOKEN }}
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
