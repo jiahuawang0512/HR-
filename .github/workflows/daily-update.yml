@@ -31,14 +31,6 @@ jobs:
       - name: 构建前端
         run: python .github/scripts/build_static.py
 
-      - name: 提交并推送
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: "自动更新日报数据"
-          add: "."
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
@@ -48,6 +40,6 @@ jobs:
         run: npm install -g edgeone
 
       - name: 部署到 EdgeOne Pages
-        run: npx edgeone pages deploy . -n hr-daily2 -t ${{ secrets.EDGEONE_API_TOKEN }}
+        run: npx edgeone pages deploy ./static -n hr-daily2 -t ${{ secrets.EDGEONE_API_TOKEN }}
         env:
           EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
