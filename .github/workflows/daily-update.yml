@@ -2,118 +2,45 @@ name: 每日自动更新HR日报
 
 on:
   schedule:
-    - cron: "15 2 * * *"  # 每天 UTC 02:15 (北京时间 10:15) 自动更新
-  workflow_dispatch:       # 允许手动点击运行
+    - cron: "15 2 * * *"
+  workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      # 1. 拉取代码
       - name: 拉取代码
         uses: actions/checkout@v4
 
-      # 2. 设置 Python 环境
       - name: 设置 Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      # 3. 安装依赖
       - name: 安装依赖
         run: |
           pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-      # 4. 运行抓取脚本
       - name: 运行抓取脚本
-        run: |
-          cd backend
-          python -c "
-import sys
-sys.path.insert(0, '.')
-import config
-from scraper import fetch_daily_articles
-from scraper_hbr_cn import HBRCaiJingScraper
+        run: python .github/scripts/fetch_articles.py
 
-print('开始抓取文章...')
-
-# 抓取 Nature
-try:
-    articles, total = fetch_daily_articles()
-    print(f'✅ Nature 抓取完成: {total} 篇')
-except Exception as e:
-    print(f'⚠️  Nature 抓取失败: {e}')
-
-# 抓取 HBR 中文版
-try:
-    scraper = HBRCaiJingScraper()
-    cn_articles = scraper.fetch_articles()
-    print(f'✅ HBR 中文版抓取完成: {len(cn_articles)} 篇')
-except Exception as e:
-    print(f'⚠️  HBR 中文版抓取失败: {e}')
-
-print('抓取完成!')
-"
-
-      # 5. 构建前端静态文件
       - name: 构建前端
-        run: |
-          # 生成静态页面（用于 EdgeOne Pages 部署）
-          cat > build.py << 'EOF'
-import os
-import json
-from datetime import datetime
+        run: python .github/scripts/build_static.py
 
-# 读取前端文件
-index_html = open('index.html', 'r', encoding='utf-8').read()
-app_js = open('app.js', 'r', encoding='utf-8').read()
-data_js = open('data.js', 'r', encoding='utf-8').read()
-styles_css = open('styles.css', 'r', encoding='utf-8').read()
-
-# 创建静态页面
-static_html = f'''<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR信息日报 - 人力资源管理信息追踪</title>
-    <link rel="stylesheet" href="data:text/css,{styles_css.replace(chr(10), chr(10)+"    ")}" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    {index_html.replace('<script src="data.js"></script>', '').replace('<script src="app.js"></script>', '')}
-    <script>
-        {data_js}
-        {app_js}
-    </script>
-</body>
-</html>'''
-
-# 写入静态文件
-open('static/index.html', 'w', encoding='utf-8').write(static_html)
-print('✅ 静态页面构建完成')
-EOF
-          python build.py
-
-      # 6. 提交并推送
       - name: 提交并推送
         uses: EndBug/add-and-commit@v9
         with:
-          message: "自动更新日报数据 - $(date '+%Y-%m-%d %H:%M')"
+          message: "自动更新日报数据"
           add: "."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 7. 部署到 EdgeOne Pages
       - name: 部署到 EdgeOne Pages
-        if: github.event_name == 'schedule'  # 只在定时触发时部署
+        if: github.event_name == 'schedule'
         uses: edgeone/edgeone-pages-action@v1
         with:
           token: ${{ secrets.EDGEONE_TOKEN }}
           project: ${{ secrets.EDGEONE_PROJECT }}
           env: production
           dist: ./static
-
-    # 邮件推送（需要 SMTP 配置，在本地运行）
-    # 注意：GitHub Actions 无法直接发送邮件，需要本地服务运行
