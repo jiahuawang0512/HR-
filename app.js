@@ -1,7 +1,7 @@
 // ========== HR信息日报 - 前端主逻辑 ==========
 
 // API 基础地址
-const API_BASE = 'http://localhost:8082/api';
+const API_BASE = "http://152.136.229.27:8000/api";
 
 // 全局状态
 let displayedCount = 0;
