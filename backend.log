@@ -1,0 +1,96 @@
+/Users/wangjiahua/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+INFO:     Started server process [34674]
+INFO:     Waiting for application startup.
+
+==================================================
+🚀 HR信息日报系统启动中...
+==================================================
+📦 初始化数据库...
+   ✅ 数据库就绪
+⏰ 启动定时任务调度器...
+
+✅ 定时任务调度器已启动
+   抓取时间: 每天 10:30
+   推送时间: 每天 10:40
+   ✅ 调度器已启动
+
+📍 服务地址:
+   API文档: http://localhost:8080/api/docs
+   前端界面: http://localhost:8080/
+==================================================
+
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+
+==================================================
+⏰ [2026-05-26 16:52:50] 开始执行文章抓取任务...
+==================================================
+
+开始抓取 Nature 期刊 HR 相关文章...
+
+开始抓取 Nature HR 相关文章...
+  保留发布日期在 2026-05-19 到 2026-05-25 之间的文章
+==================================================
+
+正在搜索: human resource management workplace
+  [human resource management workplace] 抓取到 19 条结果
+
+正在搜索: employee engagement productivity
+  [employee engagement productivity] 抓取到 25 条结果
+
+正在搜索: talent management organization
+  [talent management organization] 抓取到 19 条结果
+
+正在搜索: workplace diversity inclusion
+  [workplace diversity inclusion] 抓取到 24 条结果
+
+正在搜索: organizational behavior psychology
+  [organizational behavior psychology] 抓取到 0 条结果
+
+正在搜索: leadership management business
+  [leadership management business] 抓取到 0 条结果
+
+正在搜索: human capital management
+  [human capital management] 抓取到 0 条结果
+
+正在搜索: workforce analytics
+  [workforce analytics] 抓取到 0 条结果
+
+正在搜索: employee wellbeing mental health
+  [employee wellbeing mental health] 抓取到 0 条结果
+
+正在搜索: remote work productivity
+  [remote work productivity] 抓取到 0 条结果
+
+==================================================
+总共抓取到 3 篇最近7天内的HR相关文章（去重后）
+✅ Nature 期刊抓取完成，共 3 篇
+
+开始抓取 HBR 中文版文章...
+  [HBR中文] 保留发布日期在 2026-05-19 之后的文章
+/Users/wangjiahua/Library/Python/3.9/lib/python/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'www.hbrchina.org'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/Users/wangjiahua/Library/Python/3.9/lib/python/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'www.hbrcitic.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [HBR中文] 成功抓取到 0 条最近7天内的HR相关文章
+✅ HBR 中文版抓取完成，共 0 篇
+
+✅ 所有数据源抓取完成
+
+⚠️  未找到昨天发布的文章，使用最近的 3 篇文章
+
+✅ 抓取完成！
+   本次新增: 0 篇
+   今日推送: 3 篇
+INFO:     127.0.0.1:63655 - "POST /api/admin/fetch HTTP/1.1" 200 OK
+
+==================================================
+📬 [2026-05-26 16:53:27] 开始执行每日推送任务...
+==================================================
+
+📤 推送完成！
+   订阅者总数: 2
+   成功发送: 2
+   发送失败: 0
+INFO:     127.0.0.1:63806 - "POST /api/admin/push HTTP/1.1" 200 OK
