@@ -8,6 +8,8 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: 拉取代码
         uses: actions/checkout@v4
@@ -33,15 +35,9 @@ jobs:
           python .github/scripts/build_static.py
           cp static/index.html index.html
 
-      - name: 设置 Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: 安装 EdgeOne CLI
-        run: npm install -g edgeone
-
-      - name: 部署到 EdgeOne Pages
-        run: npx edgeone pages deploy . -n hr-information -t ${{ secrets.EDGEONE_API_TOKEN }}
-        env:
-          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
+      - name: 提交并推送更新到 GitHub
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add index.html static/index.html data.js
+          git diff --cached --quiet || (git commit -m "chore: 自动更新日报数据 $(date +%Y-%m-%d)" && git push)
