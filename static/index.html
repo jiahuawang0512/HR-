@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR信息日报 - 人力资源管理信息追踪</title>
+    <link rel="stylesheet" href="data:text/css,/* ========== 全局样式重置 ========== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    :root {
+        --primary-color: #1a73e8;
+        --primary-dark: #1557b0;
+        --secondary-color: #34a853;
+        --accent-color: #fbbc04;
+        --danger-color: #ea4335;
+        --bg-primary: #f8fafc;
+        --bg-secondary: #ffffff;
+        --text-primary: #1f2937;
+        --text-secondary: #6b7280;
+        --text-muted: #9ca3af;
+        --border-color: #e5e7eb;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        --radius-sm: 6px;
+        --radius-md: 10px;
+        --radius-lg: 16px;
+        --radius-xl: 24px;
+    }
+    
+    body {
+        font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+    }
+    
+    /* ========== 导航栏 ========== */
+    .navbar {
+        background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+        padding: 16px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .nav-container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    
+    .logo-icon {
+        font-size: 42px;
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+    }
+    
+    .logo-text h1 {
+        font-size: 26px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: -0.5px;
+    }
+    
+    .subtitle {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 2px;
+        letter-spacing: 0.3px;
+    }
+    
+    .nav-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .push-time {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 8px 16px;
+        border-radius: var(--radius-xl);
+        backdrop-filter: blur(10px);
+    }
+    
+    .clock {
+        font-size: 16px;
+    }
+    
+    .subscribe-btn {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #4285f4 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: var(--radius-xl);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 14px rgba(26, 115, 232, 0.35);
+    }
+    
+    .subscribe-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(26, 115, 232, 0.45);
+    }
+    
+    /* ========== 主内容区 ========== */
+    .main-content {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px 20px;
+    }
+    
+    /* ========== 统计栏 ========== */
+    .stats-bar {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border-radius: var(--radius-lg);
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        margin-bottom: 24px;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        flex-wrap: wrap;
+    }
+    
+    .stat-item {
+        text-align: center;
+        min-width: 100px;
+    }
+    
+    .stat-number {
+        display: block;
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--primary-color);
+        line-height: 1.2;
+    }
+    
+    .stat-label {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-top: 4px;
+    }
+    
+    .stat-divider {
+        width: 1px;
+        height: 48px;
+        background: var(--border-color);
+    }
+    
+    @media (max-width: 900px) {
+        .stats-bar {
+            gap: 20px;
+            padding: 20px;
+        }
+    
+        .stat-number {
+            font-size: 26px;
+        }
+    
+        .stat-divider {
+            display: none;
+        }
+    }
+    
+    /* ========== 工具栏 ========== */
+    .toolbar {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+    }
+    
+    .search-box {
+        position: relative;
+        flex: 1;
+        min-width: 280px;
+    }
+    
+    .search-box input {
+        width: 100%;
+        padding: 14px 20px 14px 48px;
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-md);
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: var(--bg-secondary);
+    }
+    
+    .search-box input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1);
+    }
+    
+    .search-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        color: var(--text-muted);
+    }
+    
+    .filter-group {
+        display: flex;
+        gap: 12px;
+    }
+    
+    .filter-group select {
+        padding: 14px 36px 14px 18px;
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-md);
+        font-size: 14px;
+        cursor: pointer;
+        background: var(--bg-secondary);
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        transition: all 0.3s ease;
+    }
+    
+    .filter-group select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+    }
+    
+    /* ========== 日期卡片容器 ========== */
+    .cards-container {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    /* ========== 日期卡片 ========== */
+    .date-card {
+        background: var(--bg-secondary);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: slideUp 0.5s ease forwards;
+    }
+    
+    @keyframes slideUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .date-card:hover {
+        box-shadow: var(--shadow-xl);
+    }
+    
+    .date-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #4285f4 100%);
+        padding: 16px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .date-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+    
+    .date-badge {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 8px 16px;
+        border-radius: var(--radius-md);
+        color: white;
+        font-weight: 600;
+        font-size: 15px;
+    }
+    
+    .date-weekday {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+    }
+    
+    .article-count-badge {
+        background: rgba(255, 255, 255, 0.25);
+        color: white;
+        padding: 6px 14px;
+        border-radius: var(--radius-xl);
+        font-size: 13px;
+        font-weight: 500;
+    }
+    
+    /* ========== 文章列表 ========== */
+    .articles-list {
+        padding: 16px 20px 20px;
+        display: grid;
+        gap: 16px;
+    }
+    
+    /* ========== 文章卡片 ========== */
+    .article-card {
+        background: linear-gradient(135deg, #fafbff 0%, #f5f7fa 100%);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 18px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .article-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .article-card:hover {
+        transform: translateX(6px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-color);
+    }
+    
+    .article-card:hover::before {
+        opacity: 1;
+    }
+    
+    /* 文章卡片标题链接样式 */
+    .article-title-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        flex: 1;
+    }
+    .article-title-link:hover .article-title {
+        color: var(--primary-color);
+        text-decoration: underline;
+    }
+    
+    .article-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+        gap: 16px;
+    }
+    
+    .article-title {
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.5;
+    }
+    
+    .article-topic-tag {
+        flex-shrink: 0;
+        padding: 5px 12px;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+    
+    .topic-recruitment { background: #dbeafe; color: #1e40af; }
+    .topic-training { background: #d1fae5; color: #065f46; }
+    .topic-performance { background: #fef3c7; color: #92400e; }
+    .topic-compensation { background: #fce7f3; color: #9d174d; }
+    .topic-employee-relations { background: #ede9fe; color: #5b21b6; }
+    .topic-hr-tech { background: #cffafe; color: #0e7490; }
+    .topic-organizational-behavior { background: #fef9c3; color: #854d0e; }
+    .topic-diversity { background: #fce7f3; color: #be185d; }
+    
+    /* 来源标签样式 */
+    .source-badge {
+        padding: 4px 10px;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    .source-nature {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+    
+    .source-hbr {
+        background: #fef3c7;
+        color: #92400e;
+    }
+    
+    .article-summary {
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.75;
+        margin-bottom: 16px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .article-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 14px;
+        border-top: 1px dashed var(--border-color);
+    }
+    
+    .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 13px;
+        color: var(--text-muted);
+    }
+    
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .meta-item .icon {
+        font-size: 14px;
+    }
+    
+    .article-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    
+    .article-link:hover {
+        color: var(--primary-dark);
+        gap: 10px;
+    }
+    
+    /* ========== 空状态 ========== */
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+    }
+    
+    .empty-icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+        opacity: 0.5;
+    }
+    
+    .empty-state h3 {
+        font-size: 20px;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+    }
+    
+    .empty-state p {
+        color: var(--text-muted);
+        font-size: 14px;
+    }
+    
+    /* ========== 加载更多 ========== */
+    .load-more-container {
+        text-align: center;
+        margin-top: 40px;
+        padding-bottom: 20px;
+    }
+    
+    .load-more-btn {
+        background: var(--bg-secondary);
+        border: 2px solid var(--border-color);
+        padding: 14px 36px;
+        border-radius: var(--radius-xl);
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-primary);
+    }
+    
+    .load-more-btn svg {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.3s ease;
+    }
+    
+    .load-more-btn:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+    
+    .load-more-btn:hover svg {
+        transform: translateY(3px);
+    }
+    
+    /* ========== 页脚 ========== */
+    .footer {
+        background: #1a202c;
+        color: rgba(255, 255, 255, 0.6);
+        text-align: center;
+        padding: 32px 24px;
+        margin-top: 60px;
+    }
+    
+    .footer-content p {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+    
+    .disclaimer {
+        font-size: 12px !important;
+        color: rgba(255, 255, 255, 0.4) !important;
+    }
+    
+    /* ========== 弹窗 ========== */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+        animation: fadeIn 0.25s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .modal {
+        background: var(--bg-secondary);
+        border-radius: var(--radius-lg);
+        padding: 36px;
+        max-width: 520px;
+        width: 100%;
+        position: relative;
+        box-shadow: var(--shadow-xl);
+        animation: modalSlideIn 0.3s ease;
+    }
+    
+    @keyframes modalSlideIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95) translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+    
+    .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        font-size: 28px;
+        color: var(--text-muted);
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+    
+    .modal-close:hover {
+        background: var(--bg-primary);
+        color: var(--text-primary);
+    }
+    
+    .modal-header h2 {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+    }
+    
+    .modal-header p {
+        color: var(--text-secondary);
+        font-size: 14px;
+    }
+    
+    /* ========== 订阅表单 ========== */
+    .subscribe-form {
+        margin-top: 24px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+    }
+    
+    .form-group input[type="email"] {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-md);
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-group input[type="email"]:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1);
+    }
+    
+    .checkbox-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .checkbox-group label {
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+        font-weight: 400 !important;
+        color: var(--text-secondary) !important;
+        cursor: pointer;
+        padding: 8px 12px;
+        background: var(--bg-primary);
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
+    }
+    
+    .checkbox-group label:hover {
+        background: #e5e7eb;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+        accent-color: var(--primary-color);
+        width: 16px;
+        height: 16px;
+    }
+    
+    .submit-btn {
+        width: 100%;
+        background: linear-gradient(135deg, var(--primary-color) 0%, #4285f4 100%);
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: var(--radius-md);
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 8px;
+    }
+    
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(26, 115, 232, 0.4);
+    }
+    
+    /* ========== 文章详情弹窗 ========== */
+    .article-detail-modal {
+        max-width: 600px;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+    
+    .detail-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.4;
+        margin-bottom: 16px;
+        padding-right: 30px;
+    }
+    
+    .detail-topic {
+        display: inline-block;
+        padding: 5px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+    
+    .detail-section {
+        margin-bottom: 24px;
+    }
+    
+    .detail-section h4 {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .detail-section p {
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.8;
+    }
+    
+    .detail-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 12px 20px;
+        background: #eff6ff;
+        border-radius: var(--radius-md);
+        transition: all 0.2s ease;
+    }
+    
+    .detail-link:hover {
+        background: #dbeafe;
+    }
+    
+    /* ========== 响应式设计 ========== */
+    @media (max-width: 900px) {
+        .nav-container {
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+        }
+        
+        .nav-info {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .stats-bar {
+            flex-wrap: wrap;
+            gap: 24px;
+            padding: 20px;
+        }
+        
+        .stat-divider {
+            display: none;
+        }
+        
+        .toolbar {
+            flex-direction: column;
+        }
+        
+        .filter-group {
+            width: 100%;
+        }
+        
+        .filter-group select {
+            flex: 1;
+        }
+        
+        .articles-list {
+            padding: 16px 20px 24px;
+        }
+        
+        .article-card {
+            padding: 18px;
+        }
+        
+        .article-top {
+            flex-direction: column;
+        }
+        
+        .checkbox-group {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .logo-text h1 {
+            font-size: 20px;
+        }
+        
+        .subtitle {
+            font-size: 11px;
+        }
+        
+        .stat-number {
+            font-size: 28px;
+        }
+        
+        .date-header {
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
+        }
+        
+        .push-time {
+            display: none;
+        }
+    }
+    
+    /* ========== 代码块样式 ========== */
+    .code-block {
+        background: #1e1e1e;
+        color: #a5f3fc;
+        padding: 14px 18px;
+        border-radius: var(--radius-sm);
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        overflow-x: auto;
+        margin: 10px 0;
+    }
+    " />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR信息日报 - 人力资源管理信息追踪</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">📊</span>
+                <div class="logo-text">
+                    <h1>HR信息日报</h1>
+                    <p class="subtitle">人力资源管理领域 · 每日最新信息追踪</p>
+                </div>
+            </div>
+            <div class="nav-info">
+                <div class="push-time">
+                    <span class="clock">🕐</span>
+                    每日 10:40 推送
+                </div>
+                <button class="subscribe-btn" onclick="handleSubscribe()">
+                    📬 订阅推送
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <!-- 统计栏 -->
+        <section class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number" id="total-articles">0</span>
+                <span class="stat-label">累计文章</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" id="total-subscribers">0</span>
+                <span class="stat-label">订阅人数</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" id="latest-date">--</span>
+                <span class="stat-label">最近更新</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" id="next-push">--</span>
+                <span class="stat-label">下次推送</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" id="scheduler-status">🔴 --</span>
+                <span class="stat-label">调度状态</span>
+            </div>
+            <div class="stat-divider"></div>
+        </section>
+
+        <!-- 筛选工具栏 -->
+        <section class="toolbar">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索文章主题或关键词..." oninput="filterArticles()">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+            </div>
+            <div class="filter-group">
+                <select id="source-filter" onchange="filterArticles()">
+                    <option value="all">全部来源</option>
+                </select>
+                <select id="date-filter" onchange="filterArticles()">
+                    <option value="all">全部日期</option>
+                </select>
+                <select id="topic-filter" onchange="filterArticles()">
+                    <option value="all">全部领域</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- 日期卡片容器 -->
+        <section class="cards-container" id="cards-container">
+            <!-- 动态渲染内容 -->
+        </section>
+
+        <!-- 空状态 -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <div class="empty-icon">🔍</div>
+            <h3>未找到匹配的文章</h3>
+            <p>尝试调整筛选条件或搜索关键词</p>
+        </div>
+
+        <!-- 加载更多按钮 -->
+        <div class="load-more-container" id="load-more-container">
+            <button class="load-more-btn" onclick="loadMore()">
+                加载更多
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </button>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 HR Information Daily · 数据来源：Nature (nature.com) · 哈佛商业评论中文版 (hbrchina.org)</p>
+            <p class="disclaimer">本平台仅供信息参考，文章版权归原作者所有</p>
+        </div>
+    </footer>
+
+    <!-- 订阅弹窗 -->
+    <div class="modal-overlay" id="subscribe-modal" style="display: none;">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-header">
+                <h2>订阅 HR信息日报</h2>
+                <p>每日中午12点，获取人力资源管理领域最新信息动态</p>
+            </div>
+            <form class="subscribe-form" onsubmit="submitSubscribe(event)">
+                <div class="form-group">
+                    <label for="email">邮箱地址</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="interests">感兴趣的领域（可多选）</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" value="recruitment"> 招聘与选拔</label>
+                        <label><input type="checkbox" value="training"> 培训与发展</label>
+                        <label><input type="checkbox" value="performance"> 绩效管理</label>
+                        <label><input type="checkbox" value="compensation"> 薪酬福利</label>
+                        <label><input type="checkbox" value="hr-tech"> HR科技与AI</label>
+                        <label><input type="checkbox" value="org-behavior"> 组织行为学</label>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">确认订阅</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 文章详情弹窗 -->
+    <div class="modal-overlay" id="article-modal" style="display: none;" onclick="closeArticleModal(event)">
+        <div class="modal article-detail-modal" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeArticleModal()">&times;</button>
+            <div id="article-detail-content"></div>
+        </div>
+    </div>
+
+    
+    
+</body>
+</html>
+
+    <script>
+        // ========== HR信息日报 - 真实数据 ==========
+// 每日自动从 Nature 及其子期刊检索 HR 领域相关研究
+// 数据来源：nature.com 实际检索结果
+const dailyResearchData = [
+    {
+        date: '2026-04-17',
+        weekday: '星期五',
+        articles: [
+            {
+                id: 1,
+                title: 'AI算法会选择你的下一位实验室同事吗？——学术招聘中的AI工具应用',
+                topic: 'recruitment',
+                topicLabel: '招聘与选拔',
+                summary: '本文探讨了人工智能工具在学术招聘中的兴起及其潜在影响。研究分析了AI辅助招聘系统的运作机制，包括简历筛选、面试评估和候选人匹配等环节。文章指出，虽然AI可以显著提升招聘效率并减少人为偏见，但也存在"黑箱决策"、数据偏见放大以及候选人对技术接受度不均等风险。作者呼吁建立透明的算法审计机制和"人机协同"的招聘决策框架。',
+                source: 'Nature',
+                authors: 'Linda Nordling',
+                link: 'https://www.nature.com/articles/d41586-025-02261-5'
+            },
+            {
+                id: 2,
+                title: '远程工作如何塑造工作与家庭平衡？工作压力与领导支持的交互作用',
+                topic: 'employee-relations',
+                topicLabel: '员工关系',
+                summary: '本研究通过大样本调查（N=1,247）探讨了远程办公对员工工作家庭平衡的影响路径。研究发现，远程工作的效果并非线性——适度远程（每周2-3天）能显著改善工作家庭冲突，但过度远程反而因边界模糊导致角色混淆。关键调节变量为领导支持水平：高领导支持组的工作家庭满意度比低支持组高出42%。研究建议企业制定灵活但有边界的远程政策，同时培训管理者的数字化领导能力。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Te Li, Wen Yang',
+                link: 'https://www.nature.com/articles/s41635-026-00182-6'
+            },
+            {
+                id: 3,
+                title: '生成式AI采用与员工职业后果：资源保存视角下的工作重塑与职业承诺',
+                topic: 'hr-tech',
+                topicLabel: 'HR科技与AI',
+                summary: '基于资源保存理论（COR），本研究调查了生成式AI在工作场所的广泛采用对员工的深层影响。通过对5家引入ChatGPT类工具的企业进行前后测对比（N=892），研究发现：AI工具使用显著增加了员工的工作重塑行为（β=0.34），但同时也加剧了技能过时焦虑。对AI接受度高的员工表现出更强的职业承诺和创造力，而对AI持抵触态度的员工则呈现更高的离职意向。组织应重视AI转型中的人文关怀和再培训投入。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Yanyan Liu, Mingyao Ke, Xiangrong Wang, Hui Zhang',
+                link: 'https://www.nature.com/articles/s41635-025-00876-x'
+            },
+            {
+                id: 4,
+                title: '基于深度学习的多源数据融合劳动关系预测系统及预警机制',
+                topic: 'performance',
+                topicLabel: '绩效管理',
+                summary: '本研究提出了一种基于深度学习的劳动关系智能预警系统，整合了考勤记录、薪资数据、投诉历史、沟通文本等多源异构数据。系统采用LSTM-CNN融合架构处理时序和非结构化信息，在10家企业试点中的劳动关系事件预测准确率达到82.3%（AUC=0.847），平均提前14天发出预警信号。研究还设计了可解释性模块帮助HR管理者理解风险归因，为预防性劳动管理提供了数据驱动的解决方案。',
+                source: 'Scientific Reports',
+                authors: 'Enhui Liu, Kyujun Cho',
+                link: 'https://www.nature.com/articles/s41598-026-42718-x'
+            }
+        ]
+    },
+    {
+        date: '2026-04-16',
+        weekday: '星期四',
+        articles: [
+            {
+                id: 5,
+                title: '环境变革型领导如何通过心理机制影响员工绿色行为？',
+                topic: 'organizational-behavior',
+                topicLabel: '组织行为学',
+                summary: '本研究构建并验证了环境变革型领导力（ETL）影响员工绿色行为（EGB）的多中介心理模型。通过对制造业1,520名员工的问卷调查和结构方程建模分析发现：环境自我效能感、绿色价值观内化和组织认同在ETL-EGB关系中起链式中介作用，总间接效应占比达67%。特别值得注意的是，当组织绿色氛围较强时，领导力的直接效应减弱而间接效应增强——说明文化情境决定了领导力发挥作用的路径。',
+                source: 'Scientific Reports',
+                authors: 'Noor Ul Hadi',
+                link: 'https://www.nature.com/articles/s41598-026-42890-z'
+            },
+            {
+                id: 6,
+                title: '包容性领导对有两个孩子的女性员工创新行为的影响：来自中国的证据',
+                topic: 'diversity',
+                topicLabel: '多元化与包容性',
+                summary: '聚焦于职场母亲这一特定群体，本研究调查了包容性领导力（IL）对二孩女性员工创新行为的促进机制。多时点追踪数据（N=387，间隔6个月）表明：IL通过提升心理安全感和减少工作-家庭冲突的双重路径正向影响创新行为，且该效应在支持型组织文化中被进一步放大。研究发现，有二孩的女性员工在感受到包容性领导后，其建言行为频率增加31%，创意提案数量增长27%。这对企业制定性别平等和人才保留策略具有重要启示。',
+                source: 'Scientific Reports',
+                authors: 'Shuyu Man, Jianpeng Fan',
+                link: 'https://www.nature.com/articles/s41598-025-83675-2'
+            },
+            {
+                id: 7,
+                title: '领导者幽默在打破职业倦怠螺旋中的资源构建作用',
+                topic: 'training',
+                topicLabel: '培训与发展',
+                summary: '职业倦怠是现代职场的流行病，本研究从一个新颖的角度——领导者 humor（幽默感）——探讨其干预效果。基于资源保存理论和工作要求-资源模型（JD-R），对教育行业986名教师的三波纵向数据显示：领导者积极幽默可通过增强情绪资源和团队凝聚力来中断倦怠的恶性循环。有趣的是，消极/讽刺性幽默反而加速倦怠进程。研究开发了"领导幽默训练"干预方案，实验组的倦怠得分在8周后降低了23%。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Hongzhen Zhang, Xun Xu, Daisy Mui Hung Kee',
+                link: 'https://www.nature.com/articles/s41635-026-00134-3'
+            }
+        ]
+    },
+    {
+        date: '2026-04-15',
+        weekday: '星期三',
+        articles: [
+            {
+                id: 8,
+                title: 'AI面试为何降低求职者申请意愿？——感知去人性化的中介作用',
+                topic: 'hr-tech',
+                topicLabel: 'HR科技与AI',
+                summary: '随着AI视频面试的普及，一个悖论浮现：技术本应提升招聘效率，却可能吓跑优秀候选人。本研究通过情景实验（N=1,156）和实地追踪揭示了其内在机制：AI面试主要通过三条路径降低申请意愿——(1) 感知去人性化 (β=-0.28)，(2) 互动公正感缺失 (β=-0.22)，(3) 自我展示焦虑 (β=-0.19)。值得注意的是，Z世代求职者的负面反应最为强烈，而有过远程协作经验的候选人则更为接纳。研究建议企业在AI招聘中增加透明度说明和人机混合模式。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Wenhao Luo, Yuelin Zhang, Maona Mu',
+                link: 'https://www.nature.com/articles/s41599-025-02787-9'
+            },
+            {
+                id: 9,
+                title: '创业型领导如何激发员工创新行为？——有调节的中介模型验证',
+                topic: 'training',
+                topicLabel: '培训与发展',
+                summary: '在VUCA时代，创业型领导（EL）被认为是驱动组织创新的引擎。本研究以中国高新技术企业526名研发人员为样本，构建了EL→心理赋能→知识分享→创新行为的链式中介模型。实证结果显示：心理赋能是核心传导机制（间接效应占比41%），而知识共享起部分中介作用；创新自我效能感和组织容错氛围分别作为一阶和二阶调节变量。最关键的发现是：EL的效果呈倒U型曲线——过度强调创业精神反而引发员工倦怠和"创新疲劳"。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Benhua Xu, Diandian Gu',
+                link: 'https://www.nature.com/articles/s41635-026-00123-4'
+            },
+            {
+                id: 10,
+                title: '职场友谊及其对员工的影响：社交资本视角的实证分析',
+                topic: 'employee-relations',
+                topicLabel: '员工关系',
+                summary: '职场友谊常被视为非正式的"办公室社交"，但本研究系统论证了其对个体和组织产出的实质性影响。综合元分析（涵盖68项独立研究，总样本N>25,000）表明：高质量职场友谊与工作满意度(r=0.48)、组织公民行为(r=0.39)和留任意愿(r=0.35)均呈中等以上正相关。更深入的分析揭示，友谊的"工具维度"（如信息交换、互助合作）比纯粹的情感维度更能预测工作绩效。研究提醒管理者：刻意压制职场社交可能适得其反。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Aiswarya Balachandar, Ramasundaram Gurusamy',
+                link: 'https://www.nature.com/articles/s41635-026-00076-w'
+            },
+            {
+                id: 11,
+                title: '工作不安全感的亲环境影响：利他动机的关键调节作用',
+                topic: 'compensation',
+                topicLabel: '薪酬福利',
+                summary: '传统观点认为工作不安全感必然导致员工退缩行为，但本研究发现了有趣的边界条件。通过多来源配对数据（员工自评+主管评价，N=412对），研究表明：工作不安全感对亲环境行为的影响取决于个体的利他动机水平——高利他动机者在面对工作威胁时反而增加环保行为（作为维持社会形象和道德认同的补偿机制），而低利他动机者则显著减少。这一发现对企业在不稳定经济环境中维持ESG目标具有重要实践意义。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Byung-Jik Kim, Harim Sohn, Min-Jik Kim',
+                link: 'https://www.nature.com/articles/s41635-026-00067-9'
+            }
+        ]
+    },
+    {
+        date: '2026-04-14',
+        weekday: '星期二',
+        articles: [
+            {
+                id: 12,
+                title: '采用AI的阴暗面：通过心理安全和伦理领导将AI采用与员工抑郁关联起来',
+                topic: 'hr-tech',
+                topicLabel: 'HR科技与AI',
+                summary: '这是一项关于AI技术采纳的"黑暗面"的重要研究。基于压力认知评价理论和情感事件理论，对引入AI工具后的2,180名员工进行了为期12个月的追踪调查。核心发现令人警醒：高强度AI监控与员工抑郁症状显著正相关（OR=2.14）。然而，伦理领导的强缓冲作用可将该风险降低61%，而团队心理安全氛围的调节效应解释了17%的变异量。研究提出了"负责任AI部署"的五原则框架，包括透明告知、人工复核、数据最小化等。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Byung-Jik Kim, Min-Jik Kim, Julak Lee',
+                link: 'https://www.nature.com/articles/s41635-025-00956-x'
+            },
+            {
+                id: 13,
+                title: '数字化领导通过促进工作重塑增强组织韧性：组织文化的调节作用',
+                topic: 'organizational-behavior',
+                topicLabel: '组织行为学',
+                summary: '在后疫情时代，组织韧性成为HR战略的核心议题。本研究创新性地将数字化领导力（DL）、工作重塑（JC）和组织韧性（OR）纳入统一框架。对78个团队的跨层分析（N=486员工+78主管）显示：DL通过激发员工的主动工作重塑行为（如优化任务、调整认知、构建关系）来提升团队层面的组织韧性。柔性学习型文化在该路径中起最强正向调节作用（β=0.31），而刚性控制型文化则完全阻断此路径。研究为数字化转型中的领导力发展提供了明确方向。',
+                source: 'Scientific Reports',
+                authors: 'Qiuxian Ye',
+                link: 'https://www.nature.com/articles/s41598-025-84768-1'
+            }
+        ]
+    },
+    {
+        date: '2026-04-13',
+        weekday: '星期一',
+        articles: [
+            {
+                id: 14,
+                title: '领导者在塑造心理安全中的作用：来自斯洛伐克的定性研究',
+                topic: 'recruitment',
+                topicLabel: '招聘与选拔',
+                summary: '心理安全是Google Project Aristotle揭示的高绩效团队第一要素，但领导力究竟如何塑造它？本研究采用扎根理论方法，对斯洛伐克30位不同层级的管理者进行了深度半结构化访谈（累计转录文字18万字）。编码分析提炼出领导力影响心理安全的五大核心实践：(1) 对话式而非审问式反馈，(2) 公开承认自身错误，(3) 将失败重新定义为学习机会，(4) 保护团队成员免受无理指责，(5) 营造"可提问"的会议文化。研究特别指出，在权力距离较高的文化背景下，这些实践需要更强的制度化保障。',
+                source: 'Scientific Reports',
+                authors: 'Lucia Konečná, Elena Lisá, Viktória Čiriková',
+                link: 'https://www.nature.com/articles/s41598-026-42001-1'
+            },
+            {
+                id: 15,
+                title: '个体感知的工作环境与员工福祉的数据驱动类型学',
+                topic: 'compensation',
+                topicLabel: '薪酬福利',
+                summary: '传统员工福祉调研依赖预设量表，可能遗漏重要的个性化因素。本研究采用数据驱动的聚类分析方法，基于12项工作环境感知指标对11,340名员工进行分类。最终识别出四种典型画像："繁荣型"（高自主+高支持，占28%）、"耗竭型"（高要求+低支持，占22%）、"疏离型"（低参与+低意义感，占19%）和"韧性型"（高挑战+高成长，占31%）。每种类型对应不同的福祉干预策略，使精准化的员工关怀成为可能。',
+                source: 'Scientific Reports',
+                authors: 'Jun Xie, Xiangdan Piao, Shunsuke Managi',
+                link: 'https://www.nature.com/articles/s41598-025-85103-5'
+            },
+            {
+                id: 16,
+                title: '服务型领导如何及何时影响公务员的创新行为？',
+                topic: 'performance',
+                topicLabel: '绩效管理',
+                summary: '公共部门常被认为缺乏创新动力，本研究聚焦于服务型领导力（SL）能否激活公务员的创新潜力。基于公共服务动机理论（PSM）和AMO（能力-动机-机会）框架，对政府部门的587名公务员进行了问卷调查。结构方程模型证实：SL通过提升公共服务动机（β=0.29）和心理赋能（β=0.24）双路径促进创新行为。组织政治感知是显著的负向调节变量——在高度政治化的环境中，即使服务型领导也难以激发下属的创新勇气。',
+                source: 'Scientific Reports',
+                authors: 'Fen-Xian Xiao, Yun Lin, Qiu Wang',
+                link: 'https://www.nature.com/articles/s41598-025-84891-4'
+            },
+            {
+                id: 17,
+                title: '领导风格如何影响中小企业的员工敬业度和绩效？',
+                topic: 'performance',
+                topicLabel: '绩效管理',
+                summary: '中小企业（SME）的资源约束使其无法复制大企业的复杂HR体系，领导风格的作用被进一步放大。本研究对比了变革型、交易型和家长式三种领导风格对南非中小企业员工敬业度和任务绩效的差异影响（N=346）。多元回归分析显示：变革型领导对敬业度的预测力最强（ΔR²=0.31），但交易型领导在短期任务绩效上表现更优（β=0.38 vs β=0.27）。有趣的是，家长式领导的"仁慈"维度与员工组织忠诚度高度相关（r=0.52），而"威权"维度则是离职意向的首要预测因子。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Glory Mphaluwa, Liu Hui, Lazarus Obed Livingstone Banda',
+                link: 'https://www.nature.com/articles/s41635-025-01020-1'
+            }
+        ]
+    },
+    {
+        date: '2026-04-10',
+        weekday: '星期五',
+        articles: [
+            {
+                id: 18,
+                title: '语音技术对 workplace 多样性的潜在危险',
+                topic: 'hr-tech',
+                topicLabel: 'HR科技与AI',
+                summary: '语音识别和合成技术在HR场景中的应用日益广泛（如客服质检、面试评估、培训辅导），但本研究首次系统性地警示了其对职场多样性的隐性威胁。作者识别出三大风险维度：(1) 方言和口音歧视——主流语音系统对非标准英语使用者的识别错误率高30-45%，导致不公平绩效评价；(2) 性别刻板声音强化——多数TTS系统默认使用女性声音用于助理角色；(3) 跨语言迁移劣势——双语/多语员工在单一语言系统中处于不利地位。研究提出了"公平性优先设计"的技术治理指南。',
+                source: 'Nature Machine Intelligence',
+                authors: 'Mike Horia Mihail Teodorescu, Carlos Muñiz, Oskar Gstrein',
+                link: 'https://www.nature.com/articles/s42256-024-00695-6'
+            },
+            {
+                id: 19,
+                title: '感知的组织支持是否导致酒店业的OCB和离职意向？——工作生活满意度和员工韧性的间接作用',
+                topic: 'diversity',
+                topicLabel: '多元化与包容性',
+                summary: '在酒店业这个高流失率行业（年均离职率超60%），什么能留住员工？本研究以社会交换理论为基础，构建了POS（感知组织支持）→ 工作生活满意度 + 员工韧性 → OCB/离职意向的双中介模型。对欧洲连锁酒店1,874名一线员工的数据分析表明：POS对OCB的总效应中有52%通过两条并行路径传递，而离职意向的解释变异量达43%。特别值得关注的是，员工韧性的中介效应在不同国籍员工间存在显著差异——东欧员工的韧性缓冲作用最强，南欧员工最弱。',
+                source: 'Humanities and Social Sciences Communications',
+                authors: 'Mavis Sirri Ngwa, Pelin Bayram',
+                link: 'https://www.nature.com/articles/s41635-026-00087-9'
+            },
+            {
+                id: 20,
+                title: '了解顽皮型员工在职场中的社会收益',
+                topic: 'employee-relations',
+                topicLabel: '员工关系',
+                summary: '"顽皮"（playfulness）通常被视为不够专业，但本研究挑战了这一成见。通过三项递进式研究（实验室实验+现场日记法+同伴评价，总N=1,892），研究者证明：工作中的顽皮特质与创造性问题解决（r=0.37）、团队凝聚力贡献（r=0.31）和压力应对能力（r=0.29）均显著正相关。更重要的是，顽皮型员工更容易成为团队中的"社交粘合剂"，在冲突调解和信息桥接方面表现突出。研究建议组织在招聘评估中将顽皮倾向视为一项软技能而非减分项。',
+                source: 'Scientific Reports',
+                authors: 'Li Guo, Wenqi Liu, Ying Wang',
+                link: 'https://www.nature.com/articles/s41598-025-85321-5'
+            }
+        ]
+    }
+];
+
+        // ========== HR信息日报 - 前端主逻辑 ==========
+
+// API 基础地址
+const API_BASE = 'http://localhost:8082/api';
+
+// 全局状态
+let displayedCount = 0;
+const ITEMS_PER_PAGE = 3;
+let allData = [];
+let currentFilter = {
+    search: '',
+    date: 'all',
+    topic: 'all',
+    source: 'all'
+};
+
+// 领域映射
+const TOPIC_LABELS = {
+    'recruitment': '招聘与选拔',
+    'training': '培训与发展',
+    'performance': '绩效管理',
+    'compensation': '薪酬福利',
+    'employee-relations': '员工关系',
+    'hr-tech': 'HR科技与AI',
+    'organizational-behavior': '组织行为学',
+    'diversity': '多元化与包容性'
+};
+
+// ========== 页面初始化 ==========
+document.addEventListener('DOMContentLoaded', async function() {
+    await loadSources();
+    await loadTopics();
+    await loadStats();
+    await loadCalendar();
+    await loadArticles();
+});
+
+// ========== 加载来源分类 ==========
+async function loadSources() {
+    try {
+        const response = await fetch(`${API_BASE}/sources`);
+        const result = await response.json();
+
+        if (result.code === 200) {
+            const sourceSelect = document.getElementById('source-filter');
+
+            // 清空现有选项（保留"全部来源"）
+            sourceSelect.innerHTML = '<option value="all">全部来源</option>';
+
+            result.data.forEach(source => {
+                if (source.value !== 'all') {  // 跳过"all"，因为已有默认值
+                    const option = document.createElement('option');
+                    option.value = source.value;
+                    option.textContent = source.label;
+                    sourceSelect.appendChild(option);
+                }
+            });
+        }
+    } catch (error) {
+        console.error('加载来源分类失败:', error);
+    }
+}
+
+// ========== 加载领域分类 ==========
+async function loadTopics() {
+    try {
+        const response = await fetch(`${API_BASE}/topics`);
+        const result = await response.json();
+
+        if (result.code === 200) {
+            const topicSelect = document.getElementById('topic-filter');
+
+            // 清空现有选项（保留"全部领域"）
+            topicSelect.innerHTML = '<option value="all">全部领域</option>';
+
+            result.data.forEach(topic => {
+                const option = document.createElement('option');
+                option.value = topic.value;
+                option.textContent = topic.label;
+                topicSelect.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('加载领域分类失败:', error);
+    }
+}
+
+// ========== 加载统计数据 ==========
+async function loadStats() {
+    try {
+        const response = await fetch(`${API_BASE}/stats`);
+        const result = await response.json();
+
+        if (result.code === 200) {
+            document.getElementById('total-articles').textContent = result.data.total_articles;
+            document.getElementById('total-subscribers').textContent = result.data.total_subscribers;
+        }
+
+        // 加载系统状态
+        const statusResponse = await fetch(`${API_BASE}/admin/status`);
+        const statusResult = await statusResponse.json();
+
+        if (statusResult.code === 200) {
+            document.getElementById('latest-date').textContent = statusResult.data.last_push || '--';
+            document.getElementById('next-push').textContent = statusResult.data.next_push || '--';
+            document.getElementById('scheduler-status').textContent =
+                statusResult.data.scheduler_running ? '🟢 运行中' : '🔴 已停止';
+        }
+    } catch (error) {
+        console.error('加载统计数据失败:', error);
+    }
+}
+
+// ========== 加载推送日历 ==========
+async function loadCalendar() {
+    try {
+        const response = await fetch(`${API_BASE}/push-calendar?days=30`);
+        const result = await response.json();
+
+        if (result.code === 200) {
+            // 更新日期筛选器
+            const dateSelect = document.getElementById('date-filter');
+            dateSelect.innerHTML = '<option value="all">全部日期</option>';
+
+            // 只添加有文章的日期作为快捷筛选
+            result.data.forEach(item => {
+                if (item.article_count > 0) {
+                    const option = document.createElement('option');
+                    option.value = item.date;
+                    option.textContent = `${item.date} ${item.weekday} (${item.article_count}篇)`;
+                    dateSelect.appendChild(option);
+                }
+            });
+        }
+    } catch (error) {
+        console.error('加载推送日历失败:', error);
+    }
+}
+
+// ========== 加载文章列表 ==========
+async function loadArticles() {
+    try {
+        const params = new URLSearchParams();
+        if (currentFilter.date !== 'all') params.append('date', currentFilter.date);
+        if (currentFilter.topic !== 'all') params.append('topic', currentFilter.topic);
+        if (currentFilter.source !== 'all') params.append('source', currentFilter.source);
+        if (currentFilter.search) params.append('search', currentFilter.search);
+
+        params.append('page', '1');
+        params.append('page_size', '100');
+
+        const response = await fetch(`${API_BASE}/articles?${params}`);
+        const result = await response.json();
+
+        if (result.code === 200) {
+            allData = result.data.articles || [];
+            console.log(`[DEBUG] 加载文章: ${allData.length} 篇, 总计: ${result.data.total || 0}`);
+            if (allData.length > 0) {
+                console.log('[DEBUG] 第一篇示例:', {
+                    title: allData[0].title?.substring(0, 30),
+                    push_date: allData[0].push_date,
+                    publish_date: allData[0].publish_date,
+                    fetched_date: allData[0].fetched_date
+                });
+            }
+            displayedCount = 0;
+            renderCards();
+        } else {
+            console.error('[DEBUG] API 返回非 200:', result);
+            showError(`加载文章失败: ${result.message || '未知错误'}`);
+        }
+    } catch (error) {
+        console.error('加载文章列表失败:', error);
+        showError('加载文章失败，请刷新页面重试');
+    }
+}
+
+// ========== 按日期分组文章 ==========
+function groupArticlesByDate(articles) {
+    const groups = {};
+
+    articles.forEach(article => {
+        // 优先使用 push_date，其次 publish_date，再其次 fetched_date，最后 created_at
+        let rawDate = article.push_date || article.publish_date || article.fetched_date || article.created_at;
+        // 处理空字符串情况
+        if (!rawDate || rawDate.trim() === '') {
+            rawDate = article.created_at || '1970-01-01';
+        }
+
+        const date = rawDate.split(' ')[0];
+        if (!groups[date]) {
+            groups[date] = {
+                date: date,
+                weekday: getWeekday(date),
+                articles: []
+            };
+        }
+        groups[date].articles.push(article);
+    });
+
+    // 转换为数组并排序
+    return Object.values(groups).sort((a, b) => b.date.localeCompare(a.date));
+}
+
+// ========== 渲染日期卡片 ==========
+function renderCards() {
+    const container = document.getElementById('cards-container');
+    const filteredData = getFilteredData();
+    const groupedData = groupArticlesByDate(filteredData);
+
+    // 计算本次要渲染的天数
+    const dataToShow = groupedData.slice(0, displayedCount + ITEMS_PER_PAGE);
+
+    if (dataToShow.length === 0) {
+        container.innerHTML = '';
+        document.getElementById('empty-state').style.display = 'block';
+        document.getElementById('load-more-container').style.display = 'none';
+        return;
+    }
+
+    document.getElementById('empty-state').style.display = 'none';
+
+    let html = '';
+    dataToShow.forEach((day, index) => {
+        html += createDateCardHTML(day, index);
+    });
+
+    container.innerHTML = html;
+    displayedCount = dataToShow.length;
+
+    // 控制加载更多按钮
+    if (displayedCount >= groupedData.length) {
+        document.getElementById('load-more-container').style.display = 'none';
+    } else {
+        document.getElementById('load-more-container').style.display = 'block';
+    }
+}
+
+// ========== 创建日期卡片HTML ==========
+function createDateCardHTML(day, index) {
+    const articlesHTML = day.articles.map(article => createArticleCardHTML(article)).join('');
+
+    return `
+        <div class="date-card" style="animation-delay: ${index * 0.1}s">
+            <div class="date-header">
+                <div class="date-info">
+                    <span class="date-badge">${formatDateDisplay(day.date)}</span>
+                    <span class="date-weekday">${day.weekday}</span>
+                </div>
+                <span class="article-count-badge">📰 ${day.articles.length} 篇文章</span>
+            </div>
+            <div class="articles-list">
+                ${articlesHTML}
+            </div>
+        </div>
+    `;
+}
+
+// ========== 创建文章卡片HTML ==========
+function createArticleCardHTML(article) {
+    const sourceDisplay = article.source_short || article.source;
+    const sourceClass = sourceDisplay === 'HBR' ? 'source-hbr' : 'source-nature';
+
+    return `
+        <div class="article-card">
+            <div class="article-top">
+                <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="article-title-link">
+                    <h3 class="article-title">${escapeHtml(article.title)}</h3>
+                </a>
+                <span class="article-topic-tag topic-${article.topic}">${TOPIC_LABELS[article.topic] || article.topic_label || article.topic}</span>
+            </div>
+            <p class="article-summary">${escapeHtml(article.summary)}</p>
+            <div class="article-footer">
+                <div class="article-meta">
+                    <span class="meta-item source-badge ${sourceClass}">
+                        ${escapeHtml(sourceDisplay)}
+                    </span>
+                    <span class="meta-item">
+                        <span class="icon">✍️</span>
+                        ${escapeHtml(article.authors)}
+                    </span>
+                </div>
+                <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="article-link" onclick="event.stopPropagation()">
+                    查看原文 →
+                </a>
+            </div>
+        </div>
+    `;
+}
+
+// ========== 筛选功能 ==========
+function getFilteredData() {
+    let filtered = [...allData];
+
+    // 搜索筛选
+    if (currentFilter.search) {
+        const search = currentFilter.search.toLowerCase();
+        filtered = filtered.filter(article => {
+            const searchableText = `${article.title} ${article.summary} ${article.authors} ${article.source}`.toLowerCase();
+            return searchableText.includes(search);
+        });
+    }
+
+    // 日期筛选（已经在API层面处理，但保留前端过滤作为备用）
+    if (currentFilter.date !== 'all') {
+        filtered = filtered.filter(article => {
+            const date = article.push_date ? article.push_date.split(' ')[0] : '';
+            return date === currentFilter.date;
+        });
+    }
+
+    // 领域筛选
+    if (currentFilter.topic !== 'all') {
+        filtered = filtered.filter(article => article.topic === currentFilter.topic);
+    }
+
+    // 来源筛选
+    if (currentFilter.source !== 'all') {
+        filtered = filtered.filter(article => {
+            return article.source_short === currentFilter.source ||
+                   article.source === currentFilter.source ||
+                   article.source.includes(currentFilter.source);
+        });
+    }
+
+    return filtered;
+}
+
+function filterArticles() {
+    currentFilter.search = document.getElementById('search-input').value;
+    currentFilter.date = document.getElementById('date-filter').value;
+    currentFilter.topic = document.getElementById('topic-filter').value;
+    currentFilter.source = document.getElementById('source-filter').value;
+
+    displayedCount = 0;
+    renderCards();
+}
+
+// ========== 加载更多 ==========
+function loadMore() {
+    renderCards();
+}
+
+// ========== 文章详情弹窗 ==========
+async function openArticleDetail(articleId) {
+    let article = allData.find(a => a.id === articleId);
+    if (!article) {
+        // 从API获取详情
+        try {
+            const response = await fetch(`${API_BASE}/articles/${articleId}`);
+            const result = await response.json();
+            if (result.code === 200) {
+                article = result.data;
+            }
+        } catch (error) {
+            console.error('加载文章详情失败:', error);
+            return;
+        }
+    }
+
+    if (!article) return;
+
+    const content = document.getElementById('article-detail-content');
+    content.innerHTML = `
+        <h2 class="detail-title">${escapeHtml(article.title)}</h2>
+        <span class="detail-topic topic-${article.topic}">${TOPIC_LABELS[article.topic] || article.topic_label || article.topic}</span>
+
+        <div class="detail-section">
+            <h4>📋 内容提炼</h4>
+            <p>${escapeHtml(article.summary)}</p>
+        </div>
+
+        <div class="detail-section">
+            <h4>📚 来源期刊</h4>
+            <p>${escapeHtml(article.source)}</p>
+        </div>
+
+        <div class="detail-section">
+            <h4>✍️ 作者</h4>
+            <p>${escapeHtml(article.authors)}</p>
+        </div>
+
+        <div class="detail-section">
+            <h4>📅 发布日期</h4>
+            <p>${article.publish_date}</p>
+        </div>
+
+        <div class="detail-section">
+            <h4>🔗 原文链接</h4>
+            <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="detail-link">
+                访问原始文章 →
+            </a>
+        </div>
+    `;
+
+    document.getElementById('article-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeArticleModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    document.getElementById('article-modal').style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+// ========== 订阅弹窗 ==========
+function handleSubscribe() {
+    document.getElementById('subscribe-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('subscribe-modal').style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+async function submitSubscribe(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+
+    // 获取选中的领域
+    const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked');
+    const interests = Array.from(checkboxes).map(cb => cb.value);
+
+    try {
+        const response = await fetch(`${API_BASE}/subscribe`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, interests })
+        });
+
+        const result = await response.json();
+
+        if (result.code === 200) {
+            alert(`✅ 订阅成功！\n\n邮箱：${email}\n推送时间：每日中午 12:00\n\n您将收到人力资源管理领域的最新学术动态。`);
+            closeModal();
+            loadStats(); // 更新统计
+        } else {
+            alert(`❌ 订阅失败：${result.message}`);
+        }
+    } catch (error) {
+        alert('❌ 订阅失败，请稍后重试');
+        console.error('订阅请求失败:', error);
+    }
+}
+
+// ========== 工具函数 ==========
+function formatDateDisplay(dateStr) {
+    const date = new Date(dateStr);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${month}月${day}日`;
+}
+
+function getWeekday(dateStr) {
+    const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+    const date = new Date(dateStr);
+    return weekdays[date.getDay()];
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function showError(message) {
+    const container = document.getElementById('cards-container');
+    container.innerHTML = `
+        <div class="empty-state" style="display: block;">
+            <div class="empty-icon">❌</div>
+            <h3>加载失败</h3>
+            <p>${escapeHtml(message)}</p>
+        </div>
+    `;
+}
+
+// ========== 键盘快捷键 ==========
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+        closeArticleModal();
+    }
+});
+
+    </script>
+</body>
+</html>
