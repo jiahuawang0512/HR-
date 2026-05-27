@@ -26,9 +26,7 @@ jobs:
         run: python .github/scripts/fetch_articles.py
 
       - name: 生成 data.js
-        run: |
-          cd backend
-          python generate_data_js.py
+        run: python backend/generate_data_js.py
 
       - name: 构建前端
         run: python .github/scripts/build_static.py
