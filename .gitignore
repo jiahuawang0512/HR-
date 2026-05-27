@@ -1,0 +1,28 @@
+# 数据库文件（不提交到 GitHub，每个环境独立）
+*.db
+
+# 日志文件
+*.log
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# 虚拟环境
+venv/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# 本地配置（如果有的话）
+.env.local
