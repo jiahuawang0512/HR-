@@ -107,7 +107,7 @@ def init_database():
 
 # ========== 文章操作 ==========
 def insert_article(article: Article) -> Optional[int]:
-    """插入文章，返回ID，失败返回None（已存在或异常）"""
+    """插入文章，返回ID；若已存在则更新 publish_date/fetched_date/push_date"""
     with get_db() as conn:
         cursor = conn.cursor()
         try:
@@ -116,6 +116,11 @@ def insert_article(article: Article) -> Optional[int]:
                     nature_id, title, title_en, summary, source, source_short, authors, link,
                     topic, topic_label, publish_date, fetched_date, push_date, is_pushed
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(nature_id) DO UPDATE SET
+                    publish_date = excluded.publish_date,
+                    fetched_date = excluded.fetched_date,
+                    push_date = excluded.push_date,
+                    is_pushed = excluded.is_pushed
             """, (
                 article.nature_id,
                 article.title,
@@ -133,8 +138,6 @@ def insert_article(article: Article) -> Optional[int]:
                 1 if article.is_pushed else 0
             ))
             return cursor.lastrowid
-        except sqlite3.IntegrityError:
-            return None  # 已存在
         except Exception as e:
             print(f"Insert article error: {e}")
             return None

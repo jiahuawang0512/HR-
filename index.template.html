@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR信息日报 - 人力资源管理信息追踪</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">📊</span>
+                <div class="logo-text">
+                    <h1>HR信息日报</h1>
+                    <p class="subtitle">人力资源管理领域 · 每日最新信息追踪</p>
+                </div>
+            </div>
+            <div class="nav-info">
+                <div class="push-time">
+                    <span class="clock">🕐</span>
+                    每日 10:40 推送
+                </div>
+                <button class="subscribe-btn" onclick="handleSubscribe()">
+                    📬 订阅推送
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <!-- 统计栏 -->
+        <section class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number" id="total-articles">0</span>
+                <span class="stat-label">累计文章</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" id="total-subscribers">0</span>
+                <span class="stat-label">订阅人数</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" id="latest-date">--</span>
+                <span class="stat-label">最近更新</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" id="next-push">--</span>
+                <span class="stat-label">下次推送</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" id="scheduler-status">🔴 --</span>
+                <span class="stat-label">调度状态</span>
+            </div>
+            <div class="stat-divider"></div>
+        </section>
+
+        <!-- 筛选工具栏 -->
+        <section class="toolbar">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索文章主题或关键词..." oninput="filterArticles()">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+            </div>
+            <div class="filter-group">
+                <select id="source-filter" onchange="filterArticles()">
+                    <option value="all">全部来源</option>
+                </select>
+                <select id="date-filter" onchange="filterArticles()">
+                    <option value="all">全部日期</option>
+                </select>
+                <select id="topic-filter" onchange="filterArticles()">
+                    <option value="all">全部领域</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- 日期卡片容器 -->
+        <section class="cards-container" id="cards-container">
+            <!-- 动态渲染内容 -->
+        </section>
+
+        <!-- 空状态 -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <div class="empty-icon">🔍</div>
+            <h3>未找到匹配的文章</h3>
+            <p>尝试调整筛选条件或搜索关键词</p>
+        </div>
+
+        <!-- 加载更多按钮 -->
+        <div class="load-more-container" id="load-more-container">
+            <button class="load-more-btn" onclick="loadMore()">
+                加载更多
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </button>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 HR Information Daily · 数据来源：Nature (nature.com) · 哈佛商业评论中文版 (hbrchina.org)</p>
+            <p class="disclaimer">本平台仅供信息参考，文章版权归原作者所有</p>
+        </div>
+    </footer>
+
+    <!-- 订阅弹窗 -->
+    <div class="modal-overlay" id="subscribe-modal" style="display: none;">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-header">
+                <h2>订阅 HR信息日报</h2>
+                <p>每日中午12点，获取人力资源管理领域最新信息动态</p>
+            </div>
+            <form class="subscribe-form" onsubmit="submitSubscribe(event)">
+                <div class="form-group">
+                    <label for="email">邮箱地址</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="interests">感兴趣的领域（可多选）</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" value="recruitment"> 招聘与选拔</label>
+                        <label><input type="checkbox" value="training"> 培训与发展</label>
+                        <label><input type="checkbox" value="performance"> 绩效管理</label>
+                        <label><input type="checkbox" value="compensation"> 薪酬福利</label>
+                        <label><input type="checkbox" value="hr-tech"> HR科技与AI</label>
+                        <label><input type="checkbox" value="org-behavior"> 组织行为学</label>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">确认订阅</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 文章详情弹窗 -->
+    <div class="modal-overlay" id="article-modal" style="display: none;" onclick="closeArticleModal(event)">
+        <div class="modal article-detail-modal" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeArticleModal()">&times;</button>
+            <div id="article-detail-content"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

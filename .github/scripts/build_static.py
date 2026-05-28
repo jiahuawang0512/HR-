@@ -180,8 +180,12 @@ def generate_static_api_stub(data):
 
 
 def build_static():
-    # 读取源文件
-    with open('index.html', 'r', encoding='utf-8') as f:
+    # 读取模板文件（使用 template，避免已内联的 index.html 无法替换）
+    template_path = 'index.template.html'
+    if not os.path.exists(template_path):
+        # 兼容旧逻辑：如果模板不存在，回退到 index.html
+        template_path = 'index.html'
+    with open(template_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
     with open('app.js', 'r', encoding='utf-8') as f:

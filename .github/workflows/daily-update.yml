@@ -3,6 +3,7 @@ name: 每日自动更新HR日报
 on:
   schedule:
     - cron: "15 2 * * *"
+    - cron: "30 10 * * *"
   workflow_dispatch:
 
 jobs:
