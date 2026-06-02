@@ -42,3 +42,15 @@ jobs:
           git config user.email "actions@github.com"
           git add index.html static/index.html data.js
           git diff --cached --quiet || (git commit -m "chore: 自动更新日报数据 $(date +%Y-%m-%d)" && git push)
+
+      - name: 发送邮件日报
+        env:
+          # 默认按 QQ 邮箱 SSL 配置；如需改其它邮箱，在仓库 Secrets 里覆盖即可
+          SMTP_HOST: ${{ secrets.SMTP_HOST != '' && secrets.SMTP_HOST || 'smtp.qq.com' }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT != '' && secrets.SMTP_PORT || '465' }}
+          USE_SSL:   ${{ secrets.USE_SSL   != '' && secrets.USE_SSL   || 'True' }}
+          USE_TLS:   ${{ secrets.USE_TLS   != '' && secrets.USE_TLS   || 'False' }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+        run: python .github/scripts/send_email.py
