@@ -3,7 +3,8 @@ GitHub Actions: 每日邮件推送脚本
 
 订阅者来源（优先级从高到低）：
 1) 环境变量 MAIL_TO （逗号分隔，便于临时调试）
-2) 数据库 subscribers 表中 is_active=1 的全部用户（来自页面"订阅推送"）
+2) 仓库根目录 subscribers.json （由 EdgeOne Pages Function 写入，前端订阅按钮的来源）
+3) 数据库 subscribers 表中 is_active=1 的全部用户（历史兼容）
 
 需要的环境变量（GitHub Secrets）：
 - SMTP_USER       发件邮箱
@@ -17,6 +18,7 @@ GitHub Actions: 每日邮件推送脚本
 
 import os
 import sys
+import json
 from datetime import datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -28,6 +30,9 @@ import pusher  # noqa: E402
 from models import Article  # noqa: E402
 
 
+SUBSCRIBERS_JSON = os.path.join(ROOT, "subscribers.json")
+
+
 def get_recipients_from_env():
     raw = os.getenv("MAIL_TO", "").strip()
     if not raw:
@@ -35,13 +40,42 @@ def get_recipients_from_env():
     return [e.strip() for e in raw.replace(";", ",").split(",") if e.strip()]
 
 
+def get_recipients_from_json():
+    """读取仓库根目录 subscribers.json，过滤掉 active=False"""
+    if not os.path.exists(SUBSCRIBERS_JSON):
+        return []
+    try:
+        with open(SUBSCRIBERS_JSON, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        emails = []
+        for s in data.get("subscribers", []) or []:
+            email = (s.get("email") or "").strip()
+            if email and s.get("active", True):
+                emails.append(email)
+        # 去重，保持顺序
+        seen, uniq = set(), []
+        for e in emails:
+            k = e.lower()
+            if k not in seen:
+                seen.add(k)
+                uniq.append(e)
+        return uniq
+    except Exception as exc:
+        print(f"[email] 读取 subscribers.json 失败: {exc}")
+        return []
+
+
 def get_recipients_from_db():
-    """读取订阅者表中所有 is_active=1 的邮箱"""
-    with database.get_db() as conn:
-        cur = conn.cursor()
-        cur.execute("SELECT email FROM subscribers WHERE is_active=1 ORDER BY id")
-        rows = cur.fetchall()
-    return [r[0] for r in rows if r[0]]
+    """读取订阅者表中所有 is_active=1 的邮箱（历史兼容）"""
+    try:
+        with database.get_db() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT email FROM subscribers WHERE is_active=1 ORDER BY id")
+            rows = cur.fetchall()
+        return [r[0] for r in rows if r[0]]
+    except Exception as exc:
+        print(f"[email] 读取数据库订阅者失败: {exc}")
+        return []
 
 
 def get_latest_push_date():
@@ -114,11 +148,19 @@ def main():
     if recipients:
         print(f"[email] 使用 MAIL_TO 环境变量中的 {len(recipients)} 个收件人")
     else:
-        recipients = get_recipients_from_db()
+        from_json = get_recipients_from_json()
+        from_db = get_recipients_from_db()
+        # 合并去重，保持 json 优先顺序
+        seen, recipients = set(), []
+        for e in from_json + from_db:
+            k = (e or "").lower()
+            if k and k not in seen:
+                seen.add(k)
+                recipients.append(e)
         if not recipients:
-            print("[email] 数据库中没有活跃订阅者，跳过邮件发送")
+            print("[email] subscribers.json 与数据库均无活跃订阅者，跳过邮件发送")
             return 0
-        print(f"[email] 从订阅表读到 {len(recipients)} 个活跃订阅者: {recipients}")
+        print(f"[email] 订阅者来源 -> json:{len(from_json)} db:{len(from_db)} 合并后 {len(recipients)}: {recipients}")
 
     # 3. 获取要推送的文章（优先今天，否则最新一期）
     today = datetime.now().strftime("%Y-%m-%d")

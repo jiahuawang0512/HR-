@@ -1,7 +1,8 @@
 // ========== HR信息日报 - 前端主逻辑 ==========
 
 // API 基础地址
-const API_BASE = "http://152.136.229.27:8000/api";
+// 同域名访问 EdgeOne Pages Functions（functions/api/*.js）
+const API_BASE = "/api";
 
 // 全局状态
 let displayedCount = 0;

@@ -55,4 +55,8 @@ jobs:
           # 由于 .gitignore 屏蔽了 *.db，这里强制把订阅库和文章库纳入提交
           git add -f hr_daily.db
           git add index.html static/index.html data.js
-          git diff --cached --quiet || (git commit -m "chore: 自动更新日报数据 $(date +%Y-%m-%d)" && git push)
+          git diff --cached --quiet && echo "无变更" && exit 0
+          git commit -m "chore: 自动更新日报数据 $(date +%Y-%m-%d)"
+          # 拉取最新远端（可能 EdgeOne Function 刚刚提交了 subscribers.json）后再推
+          git pull --rebase --autostash origin main || true
+          git push
