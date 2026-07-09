@@ -1,11 +1,11 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-07-08 12:03:57
+// 最后更新: 2026-07-09 06:14:44
 // 文章总数: 414
 
 const dailyResearchData = [
     {
-        "date": "2026-07-08",
-        "weekday": "星期二",
+        "date": "2026-07-09",
+        "weekday": "星期三",
         "articles": [
             {
                 "id": 1064,
@@ -16,16 +16,6 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Mohamed Mohiya",
                 "link": "https://www.nature.com/articles/s41598-026-60218-1"
-            },
-            {
-                "id": 826,
-                "title": "From servant leadership to organizational citizenship behavior: A theoretically grounded moderated mediation framework for Chinese private enterprises",
-                "topic": "organizational-behavior",
-                "topicLabel": "组织行为学",
-                "summary": "研究围绕组织行为与领导力展开，为理解团队协作和组织文化提供了新视角。",
-                "source": "Nature",
-                "authors": "Jin LuMohammad FalahatPhaik Kin Cheah",
-                "link": "https://www.nature.com/articles/s41599-024-03751-6"
             },
             {
                 "id": 650,
@@ -56,6 +46,22 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Ada Sil PattererAnita C. KellerJana Kühnel",
                 "link": "https://www.nature.com/articles/s41598-024-71432-0"
+            }
+        ]
+    },
+    {
+        "date": "2026-07-08",
+        "weekday": "星期二",
+        "articles": [
+            {
+                "id": 826,
+                "title": "From servant leadership to organizational citizenship behavior: A theoretically grounded moderated mediation framework for Chinese private enterprises",
+                "topic": "organizational-behavior",
+                "topicLabel": "组织行为学",
+                "summary": "研究围绕组织行为与领导力展开，为理解团队协作和组织文化提供了新视角。",
+                "source": "Nature",
+                "authors": "Jin LuMohammad FalahatPhaik Kin Cheah",
+                "link": "https://www.nature.com/articles/s41599-024-03751-6"
             }
         ]
     },
