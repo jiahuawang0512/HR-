@@ -1,22 +1,12 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-07-10 12:40:26
+// 最后更新: 2026-07-11 05:21:34
 // 文章总数: 414
 
 const dailyResearchData = [
     {
-        "date": "2026-07-10",
-        "weekday": "星期四",
+        "date": "2026-07-11",
+        "weekday": "星期五",
         "articles": [
-            {
-                "id": 1064,
-                "title": "Threshold conditions for employee innovation: qualitative evidence from hierarchical organizations",
-                "topic": "employee-relations",
-                "topicLabel": "员工关系",
-                "summary": "本研究关注员工关系与工作体验，对提升员工敬业度和组织承诺具有实践意义。",
-                "source": "Nature",
-                "authors": "Mohamed Mohiya",
-                "link": "https://www.nature.com/articles/s41598-026-60218-1"
-            },
             {
                 "id": 650,
                 "title": "What can talent management do about involuntary remote working in the post-COVID-19 era? Spanish IT employees’ organizational commitment",
@@ -46,6 +36,22 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Ada Sil PattererAnita C. KellerJana Kühnel",
                 "link": "https://www.nature.com/articles/s41598-024-71432-0"
+            }
+        ]
+    },
+    {
+        "date": "2026-07-10",
+        "weekday": "星期四",
+        "articles": [
+            {
+                "id": 1064,
+                "title": "Threshold conditions for employee innovation: qualitative evidence from hierarchical organizations",
+                "topic": "employee-relations",
+                "topicLabel": "员工关系",
+                "summary": "本研究关注员工关系与工作体验，对提升员工敬业度和组织承诺具有实践意义。",
+                "source": "Nature",
+                "authors": "Mohamed Mohiya",
+                "link": "https://www.nature.com/articles/s41598-026-60218-1"
             }
         ]
     },
