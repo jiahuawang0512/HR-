@@ -1,12 +1,22 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-08-11 03:53:51
-// 文章总数: 414
+// 最后更新: 2026-08-11 11:13:13
+// 文章总数: 415
 
 const dailyResearchData = [
     {
         "date": "2026-08-11",
         "weekday": "星期一",
         "articles": [
+            {
+                "id": 1288,
+                "title": "Leveraging neuroleadership and AI-integrated capabilities: empowering entrepreneurial leaders to drive SME performance",
+                "topic": "performance",
+                "topicLabel": "绩效管理",
+                "summary": "本研究围绕绩效管理与评估展开，为企业优化绩效管理体系提供了实证依据。",
+                "source": "Nature",
+                "authors": "Muhammad MohsinMohamad Zulkifli Bin Abdul RahimYuen Yee Yen",
+                "link": "https://www.nature.com/articles/s41599-026-08621-x"
+            },
             {
                 "id": 650,
                 "title": "What can talent management do about involuntary remote working in the post-COVID-19 era? Spanish IT employees’ organizational commitment",
