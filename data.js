@@ -1,12 +1,32 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-08-31 17:40:33
-// 文章总数: 415
+// 最后更新: 2026-09-01 07:45:52
+// 文章总数: 416
 
 const dailyResearchData = [
     {
-        "date": "2026-08-31",
-        "weekday": "星期日",
+        "date": "2026-09-01",
+        "weekday": "星期一",
         "articles": [
+            {
+                "id": 1411,
+                "title": "Workplace ostracism and job performance: revisiting the limits of employee engagement in addressing workplace exclusion",
+                "topic": "employee-relations",
+                "topicLabel": "员工关系",
+                "summary": "本研究关注员工关系与工作体验，对提升员工敬业度和组织承诺具有实践意义。",
+                "source": "Nature",
+                "authors": "Kailash Kumar SahuRavi Kumar MishraShreya Kushwaha",
+                "link": "https://www.nature.com/articles/s41598-026-66273-y"
+            },
+            {
+                "id": 826,
+                "title": "From servant leadership to organizational citizenship behavior: A theoretically grounded moderated mediation framework for Chinese private enterprises",
+                "topic": "organizational-behavior",
+                "topicLabel": "组织行为学",
+                "summary": "研究围绕组织行为与领导力展开，为理解团队协作和组织文化提供了新视角。",
+                "source": "Nature",
+                "authors": "Jin LuMohammad FalahatPhaik Kin Cheah",
+                "link": "https://www.nature.com/articles/s41599-024-03751-6"
+            },
             {
                 "id": 650,
                 "title": "What can talent management do about involuntary remote working in the post-COVID-19 era? Spanish IT employees’ organizational commitment",
@@ -36,22 +56,6 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Ada Sil PattererAnita C. KellerJana Kühnel",
                 "link": "https://www.nature.com/articles/s41598-024-71432-0"
-            }
-        ]
-    },
-    {
-        "date": "2026-08-24",
-        "weekday": "星期日",
-        "articles": [
-            {
-                "id": 826,
-                "title": "From servant leadership to organizational citizenship behavior: A theoretically grounded moderated mediation framework for Chinese private enterprises",
-                "topic": "organizational-behavior",
-                "topicLabel": "组织行为学",
-                "summary": "研究围绕组织行为与领导力展开，为理解团队协作和组织文化提供了新视角。",
-                "source": "Nature",
-                "authors": "Jin LuMohammad FalahatPhaik Kin Cheah",
-                "link": "https://www.nature.com/articles/s41599-024-03751-6"
             }
         ]
     },
