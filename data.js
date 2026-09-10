@@ -1,12 +1,22 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-09-10 07:17:06
-// 文章总数: 416
+// 最后更新: 2026-09-10 14:33:28
+// 文章总数: 417
 
 const dailyResearchData = [
     {
         "date": "2026-09-10",
         "weekday": "星期三",
         "articles": [
+            {
+                "id": 1479,
+                "title": "ND in Micro: neuroinclusion and neuroaffirmation for neurodivergent microbiologists",
+                "topic": "diversity",
+                "topicLabel": "多元化与包容性",
+                "summary": "There is a growing awareness and visibility of neurodivergent people and our needs, but we still face workplace challenges. ND in Micro is a new global network that aims to connect, peer-support and raise the profile of neurodivergent microbiologists and our science through virtual and in-person activities and resources.",
+                "source": "Nature",
+                "authors": "Kirsty L. JonesRebecca ThomasKevin Maringer",
+                "link": "https://www.nature.com/articles/s41579-026-01368-x"
+            },
             {
                 "id": 650,
                 "title": "What can talent management do about involuntary remote working in the post-COVID-19 era? Spanish IT employees’ organizational commitment",
