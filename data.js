@@ -1,12 +1,22 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-09-17 15:09:47
-// 文章总数: 417
+// 最后更新: 2026-09-18 07:22:27
+// 文章总数: 418
 
 const dailyResearchData = [
     {
-        "date": "2026-09-17",
-        "weekday": "星期三",
+        "date": "2026-09-18",
+        "weekday": "星期四",
         "articles": [
+            {
+                "id": 1536,
+                "title": "Dancing with AI: how human-AI interaction affects employee task performance",
+                "topic": "performance",
+                "topicLabel": "绩效管理",
+                "summary": "本研究围绕绩效管理与评估展开，为企业优化绩效管理体系提供了实证依据。",
+                "source": "Nature",
+                "authors": "Yepeng WuYuanyuan JiaoYujie Liang",
+                "link": "https://www.nature.com/articles/s41599-026-09043-5"
+            },
             {
                 "id": 1479,
                 "title": "ND in Micro: neuroinclusion and neuroaffirmation for neurodivergent microbiologists",
