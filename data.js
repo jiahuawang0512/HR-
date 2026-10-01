@@ -1,11 +1,11 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-09-30 16:28:04
+// 最后更新: 2026-10-01 08:50:16
 // 文章总数: 419
 
 const dailyResearchData = [
     {
-        "date": "2026-09-30",
-        "weekday": "星期二",
+        "date": "2026-10-01",
+        "weekday": "星期三",
         "articles": [
             {
                 "id": 1615,
@@ -26,16 +26,6 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Yepeng WuYuanyuan JiaoYujie Liang",
                 "link": "https://www.nature.com/articles/s41599-026-09043-5"
-            },
-            {
-                "id": 1479,
-                "title": "ND in Micro: neuroinclusion and neuroaffirmation for neurodivergent microbiologists",
-                "topic": "diversity",
-                "topicLabel": "多元化与包容性",
-                "summary": "There is a growing awareness and visibility of neurodivergent people and our needs, but we still face workplace challenges. ND in Micro is a new global network that aims to connect, peer-support and raise the profile of neurodivergent microbiologists and our science through virtual and in-person activities and resources.",
-                "source": "Nature",
-                "authors": "Kirsty L. JonesRebecca ThomasKevin Maringer",
-                "link": "https://www.nature.com/articles/s41579-026-01368-x"
             },
             {
                 "id": 650,
@@ -66,6 +56,22 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Ada Sil PattererAnita C. KellerJana Kühnel",
                 "link": "https://www.nature.com/articles/s41598-024-71432-0"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-30",
+        "weekday": "星期二",
+        "articles": [
+            {
+                "id": 1479,
+                "title": "ND in Micro: neuroinclusion and neuroaffirmation for neurodivergent microbiologists",
+                "topic": "diversity",
+                "topicLabel": "多元化与包容性",
+                "summary": "There is a growing awareness and visibility of neurodivergent people and our needs, but we still face workplace challenges. ND in Micro is a new global network that aims to connect, peer-support and raise the profile of neurodivergent microbiologists and our science through virtual and in-person activities and resources.",
+                "source": "Nature",
+                "authors": "Kirsty L. JonesRebecca ThomasKevin Maringer",
+                "link": "https://www.nature.com/articles/s41579-026-01368-x"
             }
         ]
     },
