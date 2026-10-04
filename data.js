@@ -1,22 +1,12 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-10-03 14:47:55
+// 最后更新: 2026-10-04 08:24:01
 // 文章总数: 419
 
 const dailyResearchData = [
     {
-        "date": "2026-10-03",
-        "weekday": "星期五",
+        "date": "2026-10-04",
+        "weekday": "星期六",
         "articles": [
-            {
-                "id": 1615,
-                "title": "Corporate social responsibility and organizational performance: practices and future research agenda from a twenty-year review",
-                "topic": "performance",
-                "topicLabel": "绩效管理",
-                "summary": "本研究围绕绩效管理与评估展开，为企业优化绩效管理体系提供了实证依据。",
-                "source": "Nature",
-                "authors": "Hongjiang PuQian Zhang",
-                "link": "https://www.nature.com/articles/s41599-026-08802-8"
-            },
             {
                 "id": 1536,
                 "title": "Dancing with AI: how human-AI interaction affects employee task performance",
@@ -56,6 +46,22 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Ada Sil PattererAnita C. KellerJana Kühnel",
                 "link": "https://www.nature.com/articles/s41598-024-71432-0"
+            }
+        ]
+    },
+    {
+        "date": "2026-10-03",
+        "weekday": "星期五",
+        "articles": [
+            {
+                "id": 1615,
+                "title": "Corporate social responsibility and organizational performance: practices and future research agenda from a twenty-year review",
+                "topic": "performance",
+                "topicLabel": "绩效管理",
+                "summary": "本研究围绕绩效管理与评估展开，为企业优化绩效管理体系提供了实证依据。",
+                "source": "Nature",
+                "authors": "Hongjiang PuQian Zhang",
+                "link": "https://www.nature.com/articles/s41599-026-08802-8"
             }
         ]
     },
