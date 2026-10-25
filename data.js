@@ -1,12 +1,22 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-10-25 07:32:51
-// 文章总数: 419
+// 最后更新: 2026-10-25 14:28:59
+// 文章总数: 420
 
 const dailyResearchData = [
     {
         "date": "2026-10-25",
         "weekday": "星期六",
         "articles": [
+            {
+                "id": 1869,
+                "title": "An explainable and fair TabNet framework for remote employee performance prediction using multidimensional workplace data",
+                "topic": "employee-relations",
+                "topicLabel": "员工关系",
+                "summary": "本研究关注员工关系与工作体验，对提升员工敬业度和组织承诺具有实践意义。",
+                "source": "Nature",
+                "authors": "Zihe ZhuGuangsen WeiSihui Yu",
+                "link": "https://www.nature.com/articles/s41598-026-76297-z"
+            },
             {
                 "id": 1536,
                 "title": "Dancing with AI: how human-AI interaction affects employee task performance",
