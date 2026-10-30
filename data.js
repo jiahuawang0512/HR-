@@ -1,5 +1,5 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-10-30 08:33:23
+// 最后更新: 2026-10-30 16:46:24
 // 文章总数: 420
 
 const dailyResearchData = [
@@ -26,6 +26,16 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Yepeng WuYuanyuan JiaoYujie Liang",
                 "link": "https://www.nature.com/articles/s41599-026-09043-5"
+            },
+            {
+                "id": 826,
+                "title": "From servant leadership to organizational citizenship behavior: A theoretically grounded moderated mediation framework for Chinese private enterprises",
+                "topic": "organizational-behavior",
+                "topicLabel": "组织行为学",
+                "summary": "研究围绕组织行为与领导力展开，为理解团队协作和组织文化提供了新视角。",
+                "source": "Nature",
+                "authors": "Jin LuMohammad FalahatPhaik Kin Cheah",
+                "link": "https://www.nature.com/articles/s41599-024-03751-6"
             },
             {
                 "id": 650,
@@ -56,22 +66,6 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Ada Sil PattererAnita C. KellerJana Kühnel",
                 "link": "https://www.nature.com/articles/s41598-024-71432-0"
-            }
-        ]
-    },
-    {
-        "date": "2026-10-17",
-        "weekday": "星期五",
-        "articles": [
-            {
-                "id": 826,
-                "title": "From servant leadership to organizational citizenship behavior: A theoretically grounded moderated mediation framework for Chinese private enterprises",
-                "topic": "organizational-behavior",
-                "topicLabel": "组织行为学",
-                "summary": "研究围绕组织行为与领导力展开，为理解团队协作和组织文化提供了新视角。",
-                "source": "Nature",
-                "authors": "Jin LuMohammad FalahatPhaik Kin Cheah",
-                "link": "https://www.nature.com/articles/s41599-024-03751-6"
             }
         ]
     },
