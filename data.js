@@ -1,22 +1,12 @@
 // ========== HR信息日报 - 自动更新数据 ==========
-// 最后更新: 2026-11-01 16:53:14
+// 最后更新: 2026-11-02 09:23:57
 // 文章总数: 420
 
 const dailyResearchData = [
     {
-        "date": "2026-11-01",
-        "weekday": "星期六",
+        "date": "2026-11-02",
+        "weekday": "星期日",
         "articles": [
-            {
-                "id": 1869,
-                "title": "An explainable and fair TabNet framework for remote employee performance prediction using multidimensional workplace data",
-                "topic": "employee-relations",
-                "topicLabel": "员工关系",
-                "summary": "本研究关注员工关系与工作体验，对提升员工敬业度和组织承诺具有实践意义。",
-                "source": "Nature",
-                "authors": "Zihe ZhuGuangsen WeiSihui Yu",
-                "link": "https://www.nature.com/articles/s41598-026-76297-z"
-            },
             {
                 "id": 1536,
                 "title": "Dancing with AI: how human-AI interaction affects employee task performance",
@@ -56,6 +46,22 @@ const dailyResearchData = [
                 "source": "Nature",
                 "authors": "Ada Sil PattererAnita C. KellerJana Kühnel",
                 "link": "https://www.nature.com/articles/s41598-024-71432-0"
+            }
+        ]
+    },
+    {
+        "date": "2026-11-01",
+        "weekday": "星期六",
+        "articles": [
+            {
+                "id": 1869,
+                "title": "An explainable and fair TabNet framework for remote employee performance prediction using multidimensional workplace data",
+                "topic": "employee-relations",
+                "topicLabel": "员工关系",
+                "summary": "本研究关注员工关系与工作体验，对提升员工敬业度和组织承诺具有实践意义。",
+                "source": "Nature",
+                "authors": "Zihe ZhuGuangsen WeiSihui Yu",
+                "link": "https://www.nature.com/articles/s41598-026-76297-z"
             }
         ]
     },
